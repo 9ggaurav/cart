@@ -14,4 +14,10 @@ export type Product = {
 export type ProductCardProps = {
   product: Product;
   addToWishlist: (product: Product) => void;
+  isWishListed: boolean;
+};
+
+export type RootContext = {
+  wishList: Product[];
+  addToWishlist: (product: Product) => void;
 };

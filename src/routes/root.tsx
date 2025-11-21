@@ -1,17 +1,29 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { Heart, ShoppingCart, User } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import type { Product } from "../types";
 
 export default function Root() {
-  const [wishList, setWishList] = useState([]);
+  const [wishList, setWishList] = useState<Product[]>(() => {
+    const saved = localStorage.getItem("wishList");
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  function addToWishlist(product) {
-    setWishList((prev) => [...prev, product]);
+  function addToWishlist(product: Product): void {
+    const exists = wishList.some((p) => p.id === product.id);
+    if (exists) {
+      const list = wishList.filter((e) => e.id !== product.id);
+      setWishList(list);
+    } else {
+      setWishList((prev) => [...prev, product]);
+    }
   }
 
-  console.log("------------------------------------------");
+  useEffect(() => {
+    localStorage.setItem("wishList", JSON.stringify(wishList));
+  }, [wishList]);
+
   console.log(wishList);
-  console.log("------------------------------------------");
 
   return (
     <main className="min-h-screen flex flex-col">
@@ -57,9 +69,10 @@ export default function Root() {
             <li>
               <NavLink
                 to="/wishlist"
-                className="text-gray-700 hover:text-gray-900"
+                className="text-gray-700 hover:text-gray-900 flex gap-2"
               >
                 <Heart size={20} />
+                <h1>{wishList.length}</h1>
               </NavLink>
             </li>
             <li>

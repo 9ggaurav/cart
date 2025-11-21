@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./routes/root";
-import { loader as homeLoader } from "./routes/home";
+import { loader as homeLoader } from "./homeLoader";
 import ErrorPage from "./error-page";
 import { Contact } from "./routes/contact";
 import { About } from "./routes/about";

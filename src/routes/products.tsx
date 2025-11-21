@@ -1,10 +1,11 @@
-import { Heart } from "lucide-react";
+import { Heart, HeartOff } from "lucide-react";
 import Quantity from "../components/quantity";
 import type { ProductCardProps } from "../types";
 
 export default function ProductCard({
   product,
   addToWishlist,
+  isWishListed,
 }: ProductCardProps) {
   const { id, image, title, price, rating } = product;
   return (
@@ -13,7 +14,14 @@ export default function ProductCard({
       className="product-card w-80 border border-gray-200 flex flex-col p-5 gap-4 bg-white"
     >
       <button onClick={() => addToWishlist(product)} className="">
-        <Heart className="" />
+        {isWishListed ? (
+          <div className="flex justify-start items-center gap-3 text-[0.8rem] text-gray-500">
+            <HeartOff />
+            <p>item wishlisted</p>
+          </div>
+        ) : (
+          <Heart />
+        )}
       </button>
 
       <div className="w-full h-48 flex items-center justify-center bg-gray-50">
