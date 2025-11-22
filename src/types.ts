@@ -17,7 +17,13 @@ export type ProductCardProps = {
   isWishListed: boolean;
 };
 
+export type WishlistCardProps = {
+  product: Product;
+  removeFromWishlist: (product: Product) => void;
+};
+
 export type RootContext = {
   wishList: Product[];
   addToWishlist: (product: Product) => void;
+  removeFromWishlist: (product: Product) => void;
 };

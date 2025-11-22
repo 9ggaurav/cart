@@ -19,11 +19,14 @@ export default function Root() {
     }
   }
 
+  function removeFromWishlist(product: Product): void {
+    const list = wishList.filter((p) => p.id != product.id);
+    setWishList(list);
+  }
+
   useEffect(() => {
     localStorage.setItem("wishList", JSON.stringify(wishList));
   }, [wishList]);
-
-  console.log(wishList);
 
   return (
     <main className="min-h-screen flex flex-col">
@@ -89,7 +92,7 @@ export default function Root() {
         </nav>
       </div>
       <div>
-        <Outlet context={{ wishList, addToWishlist }} />
+        <Outlet context={{ wishList, addToWishlist, removeFromWishlist }} />
       </div>
     </main>
   );

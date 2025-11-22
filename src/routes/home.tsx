@@ -6,6 +6,8 @@ export default function Home() {
   const { wishList, addToWishlist } = useOutletContext<RootContext>();
   const products = useLoaderData() as Product[];
 
+  // console.log(wishList);
+
   return (
     <main className="flex flex-col items-center justify-center">
       {products && (
