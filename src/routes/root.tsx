@@ -1,13 +1,30 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { Heart, ShoppingCart, User } from "lucide-react";
 import { useState, useEffect } from "react";
-import type { Product } from "../types";
+import type { cartItem, Product } from "../types";
 
 export default function Root() {
   const [wishList, setWishList] = useState<Product[]>(() => {
     const saved = localStorage.getItem("wishList");
     return saved ? JSON.parse(saved) : [];
   });
+
+  const [cart, setCart] = useState<cartItem[]>(() => {
+    const saved = localStorage.getItem("inCartList");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  function handleCart(cartItem: cartItem): void {
+    const exists = cart.some((p) => p.id === cartItem.id);
+    if (exists) {
+      const list = cart.filter((p) => p.id !== cartItem.id);
+      setCart(list);
+    } else {
+      setCart((prev) => [...prev, { ...cartItem, quantity: 1 }]);
+    }
+  }
+
+  // console.log(cart);
 
   function addToWishlist(product: Product): void {
     const exists = wishList.some((p) => p.id === product.id);
@@ -72,15 +89,19 @@ export default function Root() {
             <li>
               <NavLink
                 to="/wishlist"
-                className="text-gray-700 hover:text-gray-900 flex gap-2"
+                className="text-gray-700 hover:text-gray-900 flex gap-1"
               >
                 <Heart size={20} />
                 <h1>{wishList.length}</h1>
               </NavLink>
             </li>
             <li>
-              <NavLink to="/cart" className="text-gray-700 hover:text-gray-900">
+              <NavLink
+                to="/cart"
+                className="text-gray-700 hover:text-gray-900 flex gap-1"
+              >
                 <ShoppingCart size={20} />
+                <h1>{cart.length}</h1>
               </NavLink>
             </li>
             <li>
@@ -92,7 +113,15 @@ export default function Root() {
         </nav>
       </div>
       <div>
-        <Outlet context={{ wishList, addToWishlist, removeFromWishlist }} />
+        <Outlet
+          context={{
+            wishList,
+            addToWishlist,
+            removeFromWishlist,
+            cart,
+            handleCart,
+          }}
+        />
       </div>
     </main>
   );

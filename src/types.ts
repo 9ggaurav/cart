@@ -11,10 +11,16 @@ export type Product = {
   };
 };
 
+export type cartItem = Product & {
+  quantity: number;
+};
+
 export type ProductCardProps = {
   product: Product;
   addToWishlist: (product: Product) => void;
+  isInCart: boolean;
   isWishListed: boolean;
+  handleCart: (item: cartItem) => void;
 };
 
 export type WishlistCardProps = {
@@ -24,6 +30,8 @@ export type WishlistCardProps = {
 
 export type RootContext = {
   wishList: Product[];
+  cart: cartItem[];
   addToWishlist: (product: Product) => void;
   removeFromWishlist: (product: Product) => void;
+  handleCart: (product: cartItem) => void;
 };

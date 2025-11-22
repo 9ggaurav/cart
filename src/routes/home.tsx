@@ -3,10 +3,12 @@ import { type RootContext, type Product } from "../types";
 import Products from "./products";
 
 export default function Home() {
-  const { wishList, addToWishlist } = useOutletContext<RootContext>();
+  const { wishList, addToWishlist, handleCart, cart } =
+    useOutletContext<RootContext>();
   const products = useLoaderData() as Product[];
 
-  // console.log(wishList);
+  // console.log("The cart is ");
+  console.log(cart);
 
   return (
     <main className="flex flex-col items-center justify-center">
@@ -18,11 +20,12 @@ export default function Home() {
               product={product}
               addToWishlist={addToWishlist}
               isWishListed={wishList.some((p) => p.id === product.id)}
+              handleCart={handleCart}
+              isInCart={cart.some((p) => p.id === product.id)}
             />
           ))}
         </ul>
       )}
-      *
     </main>
   );
 }
