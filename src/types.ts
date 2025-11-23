@@ -34,4 +34,11 @@ export type RootContext = {
   addToWishlist: (product: Product) => void;
   removeFromWishlist: (product: Product) => void;
   handleCart: (product: cartItem) => void;
+  removeFromCart: (item: cartItem) => void;
+  incrementQuantity: (item: cartItem) => void;
+  decrementQuantity: (item: cartItem) => void;
+};
+
+export type CartProps = {
+  removeFromCart: (item: cartItem) => void;
 };

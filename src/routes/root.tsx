@@ -41,6 +41,33 @@ export default function Root() {
     setWishList(list);
   }
 
+  function removeFromCart(cartItem: cartItem): void {
+    const list = cart.filter((p) => p.id !== cartItem.id);
+    // console.log(cartItem);
+    setCart(list);
+  }
+
+  function incrementQuantity(cartItem: cartItem): void {
+    const newList = cart.map((item) => {
+      if (item.id == cartItem.id) {
+        return { ...item, quantity: item.quantity + 1 };
+      }
+      return item;
+    });
+    setCart(newList);
+  }
+
+  function decrementQuantity(cartItem: cartItem): void {
+    const newList = cart.map((item) => {
+      if (item.id == cartItem.id) {
+        if (item.quantity === 1) return item;
+        return { ...item, quantity: item.quantity - 1 };
+      }
+      return item;
+    });
+    setCart(newList);
+  }
+
   useEffect(() => {
     localStorage.setItem("wishList", JSON.stringify(wishList));
   }, [wishList]);
@@ -124,6 +151,9 @@ export default function Root() {
             removeFromWishlist,
             cart,
             handleCart,
+            removeFromCart,
+            incrementQuantity,
+            decrementQuantity,
           }}
         />
       </div>
