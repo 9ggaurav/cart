@@ -45,6 +45,10 @@ export default function Root() {
     localStorage.setItem("wishList", JSON.stringify(wishList));
   }, [wishList]);
 
+  useEffect(() => {
+    localStorage.setItem("inCartList", JSON.stringify(cart));
+  }, [cart]);
+
   return (
     <main className="min-h-screen flex flex-col">
       <div
@@ -112,7 +116,7 @@ export default function Root() {
           </ul>
         </nav>
       </div>
-      <div>
+      <div className="">
         <Outlet
           context={{
             wishList,

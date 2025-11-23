@@ -8,7 +8,7 @@ export default function Home() {
   const products = useLoaderData() as Product[];
 
   // console.log("The cart is ");
-  console.log(cart);
+  // console.log(cart);
 
   return (
     <main className="flex flex-col items-center justify-center">

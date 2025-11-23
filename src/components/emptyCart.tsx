@@ -6,9 +6,7 @@ export default function EmptyWishlist() {
     <div className="flex flex-col items-center mt-10  min-h-screen bg-white gap-6">
       <ShoppingCart size={48} className="text-gray-300" />
 
-      <h2 className="text-xl font-medium text-gray-900">
-        Your wishlist is empty
-      </h2>
+      <h2 className="text-xl font-medium text-gray-900">Your cart is empty</h2>
 
       <p className="text-sm text-gray-600">
         Add items to your wishlist to save them for later

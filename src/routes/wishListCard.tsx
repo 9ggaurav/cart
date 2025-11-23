@@ -45,7 +45,7 @@ export default function WishListCard({
       <div className="flex flex-col gap-2 mt-auto">
         {/*<Quantity />*/}
         <button className="bg-gray-900 hover:bg-gray-800 text-white font-medium py-2 rounded text-sm">
-          Add to Cart
+          Move to Cart
         </button>
       </div>
     </div>
