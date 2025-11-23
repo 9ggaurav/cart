@@ -24,6 +24,15 @@ export default function Root() {
     }
   }
 
+  function handleCartFromWishlist(product: cartItem): void {
+    const exists = cart.some((p) => p.id === product.id);
+    if (exists) {
+      setCart(cart);
+    } else {
+      setCart((prev) => [...prev, { ...product, quantity: 1 }]);
+    }
+  }
+
   // console.log(cart);
 
   function addToWishlist(product: Product): void {
@@ -66,6 +75,13 @@ export default function Root() {
       return item;
     });
     setCart(newList);
+  }
+
+  function wishlistToCart(product: Product): void {
+    const item = wishList.find((i) => i.id === product.id);
+    if (!item) return;
+    removeFromWishlist(item);
+    handleCartFromWishlist({ ...item, quantity: 1 });
   }
 
   useEffect(() => {
@@ -154,6 +170,7 @@ export default function Root() {
             removeFromCart,
             incrementQuantity,
             decrementQuantity,
+            wishlistToCart,
           }}
         />
       </div>

@@ -5,7 +5,8 @@ import WishListCard from "./wishListCard";
 import EmptyWishlist from "../components/emptyWishlist";
 
 export default function Wishlist() {
-  const { wishList, removeFromWishlist } = useOutletContext<RootContext>();
+  const { wishList, removeFromWishlist, wishlistToCart } =
+    useOutletContext<RootContext>();
   // console.log(typeof wishList);
   return (
     <div className="flex flex-col items-center justify-center">
@@ -19,6 +20,7 @@ export default function Wishlist() {
                 key={product.id}
                 product={product}
                 removeFromWishlist={removeFromWishlist}
+                wishlistToCart={wishlistToCart}
               />
             );
           })}

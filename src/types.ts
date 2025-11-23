@@ -26,6 +26,7 @@ export type ProductCardProps = {
 export type WishlistCardProps = {
   product: Product;
   removeFromWishlist: (product: Product) => void;
+  wishlistToCart: (product: Product) => void;
 };
 
 export type RootContext = {
@@ -37,6 +38,7 @@ export type RootContext = {
   removeFromCart: (item: cartItem) => void;
   incrementQuantity: (item: cartItem) => void;
   decrementQuantity: (item: cartItem) => void;
+  wishlistToCart: (product: Product) => void;
 };
 
 export type CartProps = {

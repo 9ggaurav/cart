@@ -4,6 +4,7 @@ import type { WishlistCardProps } from "../types";
 export default function WishListCard({
   product,
   removeFromWishlist,
+  wishlistToCart,
 }: WishlistCardProps) {
   const { id, image, title, price, rating, category } = product;
   return (
@@ -44,7 +45,12 @@ export default function WishListCard({
 
       <div className="flex flex-col gap-2 mt-auto">
         {/*<Quantity />*/}
-        <button className="bg-gray-900 hover:bg-gray-800 text-white font-medium py-2 rounded text-sm">
+        <button
+          onClick={() => {
+            wishlistToCart(product);
+          }}
+          className="bg-gray-900 hover:bg-gray-800 text-white font-medium py-2 rounded text-sm"
+        >
           Move to Cart
         </button>
       </div>
