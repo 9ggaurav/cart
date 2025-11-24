@@ -5,8 +5,13 @@ import { Plus, Minus, Trash2, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 export default function Cart() {
-  const { cart, removeFromCart, incrementQuantity, decrementQuantity } =
-    useOutletContext<RootContext>();
+  const {
+    cart,
+    removeFromCart,
+    incrementQuantity,
+    decrementQuantity,
+    profilePic,
+  } = useOutletContext<RootContext>();
 
   const [cardType, setCardType] = useState("mastercard");
   const [formData, setFormData] = useState({
@@ -20,7 +25,7 @@ export default function Cart() {
     return <EmptyCart />;
   }
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -127,7 +132,9 @@ export default function Cart() {
           {/* Header */}
           <div className="flex justify-between items-start mb-8">
             <h1 className="text-4xl text-white font-semibold">Card Details</h1>
-            <div className="h-24 w-24 bg-gray-300 rounded-2xl flex-shrink-0"></div>
+            <div className="h-24 w-24 bg-gray-300 rounded-2xl flex-shrink-0">
+              <img className="" src={profilePic} />
+            </div>
           </div>
 
           {/* Card Type */}

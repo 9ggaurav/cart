@@ -1,7 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { Heart, ShoppingCart, User } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import { useState, useEffect } from "react";
 import type { cartItem, Product } from "../types";
+import Footer from "../components/footer";
 
 export default function Root() {
   const [wishList, setWishList] = useState<Product[]>(() => {
@@ -13,6 +14,22 @@ export default function Root() {
     const saved = localStorage.getItem("inCartList");
     return saved ? JSON.parse(saved) : [];
   });
+
+  const [profilePic, setProilePic] = useState<string>("/fallbackUser.png");
+
+  function handleUpload(e: React.ChangeEvent<HTMLInputElement>): void {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      setProilePic(base64);
+      localStorage.setItem("profilePic", base64);
+    };
+    reader.readAsDataURL(file);
+  }
+  console.log(profilePic);
 
   function handleCart(cartItem: cartItem): void {
     const exists = cart.some((p) => p.id === cartItem.id);
@@ -153,7 +170,11 @@ export default function Root() {
             </li>
             <li>
               <NavLink to="/me" className="text-gray-700 hover:text-gray-900">
-                <User size={20} />
+                <img
+                  src={profilePic}
+                  alt="me"
+                  className="w-12 h-12 rounded-[50%]"
+                />
               </NavLink>
             </li>
           </ul>
@@ -171,9 +192,12 @@ export default function Root() {
             incrementQuantity,
             decrementQuantity,
             wishlistToCart,
+            profilePic,
+            handleUpload,
           }}
         />
       </div>
+      <Footer />
     </main>
   );
 }

@@ -39,6 +39,8 @@ export type RootContext = {
   incrementQuantity: (item: cartItem) => void;
   decrementQuantity: (item: cartItem) => void;
   wishlistToCart: (product: Product) => void;
+  profilePic: string;
+  handleUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export type CartProps = {
