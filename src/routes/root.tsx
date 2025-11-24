@@ -15,7 +15,10 @@ export default function Root() {
     return saved ? JSON.parse(saved) : [];
   });
 
-  const [profilePic, setProilePic] = useState<string>("/fallbackUser.png");
+  const [profilePic, setProilePic] = useState<string>(() => {
+    const saved = localStorage.getItem("profilePic");
+    return saved ? saved : "/fallbackUser.png";
+  });
 
   function handleUpload(e: React.ChangeEvent<HTMLInputElement>): void {
     const file = e.target.files?.[0];
