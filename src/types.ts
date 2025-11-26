@@ -46,3 +46,22 @@ export type RootContext = {
 export type CartProps = {
   removeFromCart: (item: cartItem) => void;
 };
+
+// ----------------------------------------------------------------------------
+// return types for custom Hooks
+
+export type useWishlistReturn = {
+  wishList: Product[];
+  addToWishlist: (product: Product) => void;
+  removeFromWishlist: (product: Product) => void;
+};
+
+export type UseCartReturn = {
+  cart: cartItem[];
+  handleCart: (item: cartItem) => void;
+  removeFromCart: (item: cartItem) => void;
+  handleCartFromWishlist: (item: cartItem) => void;
+  incrementQuantity: (item: cartItem) => void;
+  decrementQuantity: (item: cartItem) => void;
+  wishlistToCart: (product: Product) => void;
+};

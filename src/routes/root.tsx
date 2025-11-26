@@ -1,116 +1,42 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";
-import { useState, useEffect } from "react";
-import type { cartItem, Product } from "../types";
+import { useState } from "react";
 import Footer from "../components/footer";
+import useWishlist from "../hooks/wishlistHook";
+import useCart from "../hooks/cartHook";
+import useProfile from "../hooks/profileHook";
 
 export default function Root() {
-  const [wishList, setWishList] = useState<Product[]>(() => {
-    const saved = localStorage.getItem("wishList");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const { wishList, addToWishlist, removeFromWishlist } = useWishlist();
 
-  const [cart, setCart] = useState<cartItem[]>(() => {
-    const saved = localStorage.getItem("inCartList");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const {
+    cart,
+    handleCart,
+    removeFromCart,
+    incrementQuantity,
+    decrementQuantity,
+    wishlistToCart,
+  } = useCart();
 
-  const [profilePic, setProilePic] = useState<string>(() => {
-    const saved = localStorage.getItem("profilePic");
-    return saved ? saved : "/fallbackUser.png";
-  });
+  const { profilePic, handleUpload } = useProfile();
 
-  function handleUpload(e: React.ChangeEvent<HTMLInputElement>): void {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  // const [profilePic, setProilePic] = useState<string>(() => {
+  //   const saved = localStorage.getItem("profilePic");
+  //   return saved ? saved : "/fallbackUser.png";
+  // });
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64 = reader.result as string;
-      setProilePic(base64);
-      localStorage.setItem("profilePic", base64);
-    };
-    reader.readAsDataURL(file);
-  }
-  console.log(profilePic);
+  // function handleUpload(e: React.ChangeEvent<HTMLInputElement>): void {
+  //   const file = e.target.files?.[0];
+  //   if (!file) return;
 
-  function handleCart(cartItem: cartItem): void {
-    const exists = cart.some((p) => p.id === cartItem.id);
-    if (exists) {
-      const list = cart.filter((p) => p.id !== cartItem.id);
-      setCart(list);
-    } else {
-      setCart((prev) => [...prev, { ...cartItem, quantity: 1 }]);
-    }
-  }
-
-  function handleCartFromWishlist(product: cartItem): void {
-    const exists = cart.some((p) => p.id === product.id);
-    if (exists) {
-      setCart(cart);
-    } else {
-      setCart((prev) => [...prev, { ...product, quantity: 1 }]);
-    }
-  }
-
-  // console.log(cart);
-
-  function addToWishlist(product: Product): void {
-    const exists = wishList.some((p) => p.id === product.id);
-    if (exists) {
-      const list = wishList.filter((e) => e.id !== product.id);
-      setWishList(list);
-    } else {
-      setWishList((prev) => [...prev, product]);
-    }
-  }
-
-  function removeFromWishlist(product: Product): void {
-    const list = wishList.filter((p) => p.id != product.id);
-    setWishList(list);
-  }
-
-  function removeFromCart(cartItem: cartItem): void {
-    const list = cart.filter((p) => p.id !== cartItem.id);
-    // console.log(cartItem);
-    setCart(list);
-  }
-
-  function incrementQuantity(cartItem: cartItem): void {
-    const newList = cart.map((item) => {
-      if (item.id == cartItem.id) {
-        return { ...item, quantity: item.quantity + 1 };
-      }
-      return item;
-    });
-    setCart(newList);
-  }
-
-  function decrementQuantity(cartItem: cartItem): void {
-    const newList = cart.map((item) => {
-      if (item.id == cartItem.id) {
-        if (item.quantity === 1) return item;
-        return { ...item, quantity: item.quantity - 1 };
-      }
-      return item;
-    });
-    setCart(newList);
-  }
-
-  function wishlistToCart(product: Product): void {
-    const item = wishList.find((i) => i.id === product.id);
-    if (!item) return;
-    removeFromWishlist(item);
-    handleCartFromWishlist({ ...item, quantity: 1 });
-  }
-
-  useEffect(() => {
-    localStorage.setItem("wishList", JSON.stringify(wishList));
-  }, [wishList]);
-
-  useEffect(() => {
-    localStorage.setItem("inCartList", JSON.stringify(cart));
-  }, [cart]);
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     const base64 = reader.result as string;
+  //     setProilePic(base64);
+  //     localStorage.setItem("profilePic", base64);
+  //   };
+  //   reader.readAsDataURL(file);
+  // }
 
   return (
     <main className="min-h-screen flex flex-col">
