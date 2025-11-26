@@ -2,7 +2,7 @@ import { useOutletContext } from "react-router-dom";
 import { type RootContext } from "../types";
 import EmptyCart from "../components/emptyCart";
 import { Plus, Minus, Trash2, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Cart() {
   const {
@@ -19,6 +19,12 @@ export default function Cart() {
     cardNumber: "",
     expiryDate: "",
     cvv: "",
+  });
+
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    submitButtonRef.current?.focus();
   });
 
   if (cart.length === 0) {
@@ -241,7 +247,10 @@ export default function Cart() {
           </div>
 
           {/* Checkout Button */}
-          <button className="w-full bg-gradient-to-r from-teal-400 to-cyan-400 text-white font-semibold py-4 rounded-xl flex items-center justify-center gap-2 hover:shadow-lg transition hover:scale-105">
+          <button
+            ref={submitButtonRef}
+            className="w-full bg-gradient-to-r from-teal-400 to-cyan-400 text-white font-semibold py-4 rounded-xl flex items-center justify-center gap-2 hover:shadow-lg transition hover:scale-105"
+          >
             <span>${total.toLocaleString()}</span>
             <span>Checkout</span>
             <ChevronRight size={20} />
