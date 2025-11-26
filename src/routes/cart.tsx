@@ -2,7 +2,7 @@ import { useOutletContext } from "react-router-dom";
 import { type RootContext } from "../types";
 import EmptyCart from "../components/emptyCart";
 import { Plus, Minus, Trash2, ChevronRight } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 export default function Cart() {
   const {
@@ -27,6 +27,12 @@ export default function Cart() {
     submitButtonRef.current?.focus();
   });
 
+  const subtotal = useMemo(() => {
+    return cart.reduce((acc, item) => {
+      return acc + Number(item.quantity) * Number(item.price);
+    }, 0);
+  }, [cart]);
+
   if (cart.length === 0) {
     return <EmptyCart />;
   }
@@ -35,11 +41,6 @@ export default function Cart() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  let subtotal = 0;
-  for (let i = 0; i < cart.length; i++) {
-    subtotal += Number(cart[i].quantity) * Number(cart[i].price);
-  }
 
   const shipping = 4;
   const total = Number(subtotal) + shipping;
